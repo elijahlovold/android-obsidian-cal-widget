@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Daily Notes Calendar</string>
+    <string name="widget_label">Daily Notes Calendar</string>
+
+    <string name="nav_prev">‹</string>
+    <string name="nav_next">›</string>
+
+    <string name="weekday_mon">M</string>
+    <string name="weekday_tue">T</string>
+    <string name="weekday_wed">W</string>
+    <string name="weekday_thu">T</string>
+    <string name="weekday_fri">F</string>
+    <string name="weekday_sat">S</string>
+    <string name="weekday_sun">S</string>
+
+    <string name="error_termux_not_installed">Termux is not installed</string>
+    <string name="error_termux_permission">Termux denied the RUN_COMMAND permission</string>
+    <string name="error_termux_launch_failed">Could not launch Termux</string>
+
+    <string name="config_title">Configure widget</string>
+    <string name="config_label_vault_path">Vault path</string>
+    <string name="config_label_todays_notes_command">todays-notes command</string>
+    <string name="config_label_nvim_path">Neovim executable</string>
+    <string name="config_label_shell_path">Shell executable</string>
+    <string name="config_save">Save</string>
+</resources>
