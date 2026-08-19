@@ -11,16 +11,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Fixed at exactly the widget's 4x4 minimum size: the calendar never stretches or
-             shrinks as the widget is resized. Any extra height goes entirely to the agenda
-             pane below (the sole layout_weight sibling), and shrinking the widget back down
-             to its 4x4 floor (minResizeHeight in calendar_widget_info.xml) leaves that pane
-             zero height, hiding it. -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+        <!-- Header/weekday row/day rows are all wrap_content: the calendar sizes itself to its
+             own content, never stretching to fill the widget. Day row heights are pinned to an
+             exact square (matching the width layout_weight already computes) via
+             setMinimumHeight in CalendarWidgetRenderer, since a build-time dp guess can't know
+             the real per-launcher pixel width. agenda_container (below, the sole
+             layout_weight sibling) absorbs 100% of whatever height that leaves, and is
+             explicitly hidden by CalendarWidgetRenderer once the widget is resized down near
+             the calendar's own minimum - see agendaVisibility() there for why that can't just
+             be left to layout_weight alone. -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -609,8 +608,6 @@
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
                 android:textSize="13sp" />
-
-        </LinearLayout>
 
         </LinearLayout>
 

@@ -113,7 +113,17 @@ be done from the app's manifest alone:
 - **Known limitation**: the app doesn't yet request the `RUN_COMMAND`
   runtime permission itself (see Termux setup above for the manual grant).
   A clean fix would request it from `WidgetConfigActivity` on first setup.
-- The widget tracks a `selectedDate` per instance, which is the natural
-  extension point for a future single-tap note preview (e.g. via a
-  background Termux command with a result `PendingIntent`) without
-  changing the double-tap-to-open behavior.
+- Selecting a date (single tap) shows an agenda preview below the calendar:
+  the `# Agenda` section of that date's note, read directly from shared
+  storage (`AgendaPreviewExtractor`/`AgendaPreviewReader`), not through
+  Termux - this needs the app's own "All files access" storage permission
+  (grantable from the config screen), separate from the Termux RUN_COMMAND
+  permission used to open notes. The selection auto-expires after a short
+  idle timeout, since true screen-off detection would require a persistent
+  foreground service this app deliberately doesn't have.
+- The calendar itself never stretches or shrinks with the widget - day
+  cells stay square by reading the widget's actual current width at render
+  time (`CalendarWidgetRenderer.squareCellSizeDp`) and computing height to
+  match, since RemoteViews has no declarative aspect-ratio support. Any
+  extra widget height goes entirely to the agenda pane; shrinking back down
+  hides that pane once the widget is close to the calendar's own minimum.
