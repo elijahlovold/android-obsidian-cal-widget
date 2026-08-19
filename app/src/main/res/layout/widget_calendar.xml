@@ -11,6 +11,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Fixed at exactly the widget's 4x4 minimum size: the calendar never stretches or
+             shrinks as the widget is resized. Any extra height goes entirely to the agenda
+             pane below (the sole layout_weight sibling), and shrinking the widget back down
+             to its 4x4 floor (minResizeHeight in calendar_widget_info.xml) leaves that pane
+             zero height, hiding it. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,9 +139,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/week_row_0"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="7">
 
@@ -208,9 +218,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/week_row_1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="7">
 
@@ -287,9 +297,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/week_row_2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="7">
 
@@ -366,9 +376,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/week_row_3"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="7">
 
@@ -445,9 +455,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/week_row_4"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="7">
 
@@ -524,9 +534,9 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/week_row_5"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="7">
 
@@ -602,10 +612,13 @@
 
         </LinearLayout>
 
+        </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/agenda_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:paddingTop="6dp">
 
@@ -623,7 +636,7 @@
                 android:layout_weight="1"
                 android:gravity="top|start"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

@@ -4,12 +4,41 @@ import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import android.widget.RemoteViews
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlin.math.roundToInt
 
 object CalendarWidgetRenderer {
+
+    // Widget's own FrameLayout padding (widget_calendar.xml): 10dp each side, both axes.
+    private const val WIDGET_PADDING_DP = 20
+    // calendar_widget_info.xml's declared minWidth, used only as a fallback for the rare case
+    // a host hasn't reported real options yet (e.g. the very first draw before any resize).
+    private const val FALLBACK_MIN_WIDTH_DP = 250
+    private const val FALLBACK_MIN_HEIGHT_DP = 375
+
+    // Header row is deterministic: btn_prev/btn_next are fixed 32dp with 6dp paddingBottom.
+    private const val HEADER_ROW_HEIGHT_DP = 38
+    // Weekday label row isn't pinned to a fixed-size view, so this is an estimate (11sp text
+    // plus 4dp paddingBottom).
+    private const val WEEKDAY_ROW_HEIGHT_ESTIMATE_DP = 21
+    // Launchers snap resize to whole grid rows, which can land well above the calendar's own
+    // computed minimum (observed ~80dp of slack on this device) - this buffer errs toward
+    // treating "close to the smallest the launcher will actually allow" as "hide the agenda",
+    // rather than trying to guess the exact grid row size of every launcher.
+    private const val AGENDA_VISIBILITY_BUFFER_DP = 90
+
+    private val weekRowIds = intArrayOf(
+        R.id.week_row_0,
+        R.id.week_row_1,
+        R.id.week_row_2,
+        R.id.week_row_3,
+        R.id.week_row_4,
+        R.id.week_row_5
+    )
 
     private val dayCellIds = intArrayOf(
         R.id.day_00,
@@ -59,7 +88,7 @@ object CalendarWidgetRenderer {
     private val headerFormatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.getDefault())
 
     fun updateWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-        appWidgetManager.updateAppWidget(appWidgetId, buildRemoteViews(context, appWidgetId))
+        appWidgetManager.updateAppWidget(appWidgetId, buildRemoteViews(context, appWidgetManager, appWidgetId))
     }
 
     /**
@@ -71,16 +100,24 @@ object CalendarWidgetRenderer {
      * double-tap) must stay cheap so double-tap detection isn't sabotaged by its own redraw.
      */
     fun updateWidgetSelectionOnly(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
-        appWidgetManager.partiallyUpdateAppWidget(appWidgetId, buildRemoteViews(context, appWidgetId))
+        appWidgetManager.partiallyUpdateAppWidget(appWidgetId, buildRemoteViews(context, appWidgetManager, appWidgetId))
     }
 
-    private fun buildRemoteViews(context: Context, appWidgetId: Int): RemoteViews {
+    private fun buildRemoteViews(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int): RemoteViews {
         val preferences = WidgetPreferences(context)
         val displayedMonth = preferences.loadDisplayedMonth(appWidgetId)
         val selectedDate = preferences.loadSelectedDate(appWidgetId)
         val today = LocalDate.now()
 
         val views = RemoteViews(context.packageName, R.layout.widget_calendar)
+
+        val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+        val cellSizeDp = squareCellSizeDp(options)
+        val density = context.resources.displayMetrics.density
+        val cellHeightPx = (cellSizeDp * density).roundToInt()
+        weekRowIds.forEach { rowId -> views.setInt(rowId, "setMinimumHeight", cellHeightPx) }
+
+        views.setViewVisibility(R.id.agenda_container, agendaVisibility(options, cellSizeDp))
         views.setTextViewText(
             R.id.text_month_year,
             displayedMonth.atDay(1).format(headerFormatter).replaceFirstChar {
@@ -133,6 +170,43 @@ object CalendarWidgetRenderer {
         views.setTextViewText(R.id.text_agenda, agendaPreviewText(preferences, appWidgetId, selectedDate))
 
         return views
+    }
+
+    /**
+     * Day cells are square: RemoteViews has no declarative aspect-ratio (no ConstraintLayout
+     * support), and a build-time guess can't know what pixel width a given launcher actually
+     * hands a "4 columns wide" widget - that varies by device/launcher. So the real available
+     * width is read live via getAppWidgetOptions() (kept current by onAppWidgetOptionsChanged),
+     * divided by 7 columns the same way layout_weight already divides width. The result is
+     * pushed onto each row's minimumHeight via the same reflective setInt() RemoteViews already
+     * uses for backgrounds - this works on any API level, unlike RemoteViews.setViewLayoutHeight
+     * (31+).
+     */
+    private fun squareCellSizeDp(options: android.os.Bundle): Float {
+        val minWidthDp = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, 0)
+            .takeIf { it > 0 } ?: FALLBACK_MIN_WIDTH_DP
+        return (minWidthDp - WIDGET_PADDING_DP) / 7f
+    }
+
+    /**
+     * Hides the agenda pane once the widget is resized down near the calendar's own natural
+     * minimum height, computed the same way squareCellSizeDp derives cell height - from the
+     * live-queried actual width, not a static guess. A plain layout_weight="0" outcome isn't
+     * reliable here because launchers snap resize to whole grid rows, which can land well
+     * above the calendar's true minimum (see AGENDA_VISIBILITY_BUFFER_DP).
+     */
+    private fun agendaVisibility(options: android.os.Bundle, cellSizeDp: Float): Int {
+        val currentHeightDp = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 0)
+            .takeIf { it > 0 } ?: FALLBACK_MIN_HEIGHT_DP
+
+        val calendarNaturalHeightDp = WIDGET_PADDING_DP + HEADER_ROW_HEIGHT_DP +
+            WEEKDAY_ROW_HEIGHT_ESTIMATE_DP + 6 * cellSizeDp
+
+        return if (currentHeightDp <= calendarNaturalHeightDp + AGENDA_VISIBILITY_BUFFER_DP) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
     }
 
     private fun agendaPreviewText(preferences: WidgetPreferences, appWidgetId: Int, selectedDate: LocalDate?): String {
