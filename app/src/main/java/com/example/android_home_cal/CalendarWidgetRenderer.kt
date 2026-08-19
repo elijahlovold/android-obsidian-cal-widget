@@ -130,7 +130,15 @@ object CalendarWidgetRenderer {
             }
         }
 
+        views.setTextViewText(R.id.text_agenda, agendaPreviewText(preferences, appWidgetId, selectedDate))
+
         return views
+    }
+
+    private fun agendaPreviewText(preferences: WidgetPreferences, appWidgetId: Int, selectedDate: LocalDate?): String {
+        if (selectedDate == null) return ""
+        if (preferences.loadAgendaPreviewDate(appWidgetId) != selectedDate) return ""
+        return preferences.loadAgendaPreviewText(appWidgetId).orEmpty()
     }
 
     private fun colorInt(context: Context, colorRes: Int): Int =

@@ -3,7 +3,11 @@ package com.example.android_home_cal
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -30,6 +35,7 @@ import com.example.android_home_cal.ui.theme.AndroidhomecalTheme
 class WidgetConfigActivity : ComponentActivity() {
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
+    private val hasStorageAccess = mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +60,26 @@ class WidgetConfigActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     ConfigScreen(
                         initialSettings = initialSettings,
+                        hasStorageAccess = hasStorageAccess.value,
+                        onGrantStorageAccess = { openStorageAccessSettings() },
                         onSave = { settings -> saveAndFinish(preferences, settings) }
                     )
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hasStorageAccess.value = Build.VERSION.SDK_INT < Build.VERSION_CODES.R || Environment.isExternalStorageManager()
+    }
+
+    private fun openStorageAccessSettings() {
+        val intent = Intent(
+            Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+            Uri.parse("package:$packageName")
+        )
+        startActivity(intent)
     }
 
     private fun saveAndFinish(preferences: WidgetPreferences, settings: WidgetSettings) {
@@ -74,11 +95,17 @@ class WidgetConfigActivity : ComponentActivity() {
 }
 
 @Composable
-private fun ConfigScreen(initialSettings: WidgetSettings, onSave: (WidgetSettings) -> Unit) {
+private fun ConfigScreen(
+    initialSettings: WidgetSettings,
+    hasStorageAccess: Boolean,
+    onGrantStorageAccess: () -> Unit,
+    onSave: (WidgetSettings) -> Unit
+) {
     var vaultPath by remember { mutableStateOf(initialSettings.vaultPath) }
     var todaysNotesCommand by remember { mutableStateOf(initialSettings.todaysNotesCommand) }
     var nvimPath by remember { mutableStateOf(initialSettings.nvimPath) }
     var shellPath by remember { mutableStateOf(initialSettings.shellPath) }
+    var agendaVaultPath by remember { mutableStateOf(initialSettings.agendaVaultPath) }
 
     Scaffold { innerPadding ->
         Column(
@@ -114,6 +141,18 @@ private fun ConfigScreen(initialSettings: WidgetSettings, onSave: (WidgetSetting
                 label = { Text(stringResource(R.string.config_label_shell_path)) },
                 modifier = Modifier.fillMaxWidth()
             )
+            OutlinedTextField(
+                value = agendaVaultPath,
+                onValueChange = { agendaVaultPath = it },
+                label = { Text(stringResource(R.string.config_label_agenda_vault_path)) },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            if (!hasStorageAccess) {
+                OutlinedButton(onClick = onGrantStorageAccess, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.config_grant_storage_access))
+                }
+            }
 
             Button(
                 onClick = {
@@ -122,7 +161,8 @@ private fun ConfigScreen(initialSettings: WidgetSettings, onSave: (WidgetSetting
                             vaultPath = vaultPath,
                             todaysNotesCommand = todaysNotesCommand,
                             nvimPath = nvimPath,
-                            shellPath = shellPath
+                            shellPath = shellPath,
+                            agendaVaultPath = agendaVaultPath
                         )
                     )
                 },

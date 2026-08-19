@@ -30,6 +30,12 @@ object TermuxLauncher {
         }
 
         val spec = TermuxCommandBuilder.buildOpenNoteCommand(date, settings)
+        Log.d(
+            TAG,
+            "openNote date=$date executable=${spec.executablePath} workdir=${spec.workingDirectory} " +
+                "sessionAction=${spec.sessionAction} args=${spec.arguments}"
+        )
+
         val intent = Intent(ACTION_RUN_COMMAND).apply {
             setClassName(TERMUX_PACKAGE, RUN_COMMAND_SERVICE)
             putExtra(EXTRA_COMMAND_PATH, spec.executablePath)
@@ -39,15 +45,8 @@ object TermuxLauncher {
             putExtra(EXTRA_SESSION_ACTION, spec.sessionAction.toString())
         }
 
-        Log.d(
-            TAG,
-            "openNote date=$date executable=${spec.executablePath} workdir=${spec.workingDirectory} " +
-                "sessionAction=${spec.sessionAction} args=${spec.arguments}"
-        )
-
         try {
             context.startForegroundService(intent)
-            Log.d(TAG, "startForegroundService returned normally for date=$date")
         } catch (e: SecurityException) {
             Log.e(TAG, "Missing permission to run Termux command", e)
             Toast.makeText(context, R.string.error_termux_permission, Toast.LENGTH_LONG).show()
@@ -55,7 +54,7 @@ object TermuxLauncher {
             Log.e(TAG, "Termux RunCommandService not found", e)
             Toast.makeText(context, R.string.error_termux_not_installed, Toast.LENGTH_LONG).show()
         } catch (e: IllegalStateException) {
-            Log.e(TAG, "Unable to start Termux foreground service", e)
+            Log.e(TAG, "Unable to start Termux service", e)
             Toast.makeText(context, R.string.error_termux_launch_failed, Toast.LENGTH_LONG).show()
         }
     }

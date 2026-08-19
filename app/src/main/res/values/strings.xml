@@ -23,5 +23,7 @@
     <string name="config_label_todays_notes_command">todays-notes command</string>
     <string name="config_label_nvim_path">Neovim executable</string>
     <string name="config_label_shell_path">Shell executable</string>
+    <string name="config_label_agenda_vault_path">Vault path (shared storage)</string>
+    <string name="config_grant_storage_access">Grant storage access</string>
     <string name="config_save">Save</string>
 </resources>

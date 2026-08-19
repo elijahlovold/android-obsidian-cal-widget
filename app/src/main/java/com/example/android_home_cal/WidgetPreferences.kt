@@ -19,7 +19,12 @@ class WidgetPreferences(context: Context) {
             WidgetSettings.Defaults.TODAYS_NOTES_COMMAND
         ),
         nvimPath = getString(appWidgetId, KEY_NVIM_PATH, WidgetSettings.Defaults.NVIM_PATH),
-        shellPath = getString(appWidgetId, KEY_SHELL_PATH, WidgetSettings.Defaults.SHELL_PATH)
+        shellPath = getString(appWidgetId, KEY_SHELL_PATH, WidgetSettings.Defaults.SHELL_PATH),
+        agendaVaultPath = getString(
+            appWidgetId,
+            KEY_AGENDA_VAULT_PATH,
+            WidgetSettings.Defaults.AGENDA_VAULT_PATH
+        )
     )
 
     fun saveSettings(appWidgetId: Int, settings: WidgetSettings) {
@@ -28,6 +33,7 @@ class WidgetPreferences(context: Context) {
             .putString(key(appWidgetId, KEY_TODAYS_NOTES_COMMAND), settings.todaysNotesCommand)
             .putString(key(appWidgetId, KEY_NVIM_PATH), settings.nvimPath)
             .putString(key(appWidgetId, KEY_SHELL_PATH), settings.shellPath)
+            .putString(key(appWidgetId, KEY_AGENDA_VAULT_PATH), settings.agendaVaultPath)
             .apply()
     }
 
@@ -58,6 +64,40 @@ class WidgetPreferences(context: Context) {
 
     fun saveSelectedDate(appWidgetId: Int, date: LocalDate) {
         prefs.edit().putString(key(appWidgetId, KEY_SELECTED_DATE), date.toString()).apply()
+    }
+
+    fun clearSelectedDate(appWidgetId: Int) {
+        prefs.edit().remove(key(appWidgetId, KEY_SELECTED_DATE)).apply()
+    }
+
+    /** The date the cached agenda preview text was fetched for, so a redraw can tell a
+     * stale in-flight result (for a date the user has since navigated away from) apart
+     * from a current one. */
+    fun loadAgendaPreviewDate(appWidgetId: Int): LocalDate? {
+        val stored = prefs.getString(key(appWidgetId, KEY_AGENDA_PREVIEW_DATE), null) ?: return null
+        return try {
+            LocalDate.parse(stored)
+        } catch (e: DateTimeParseException) {
+            Log.e(TAG, "Corrupted agenda preview date '$stored' for widget $appWidgetId", e)
+            null
+        }
+    }
+
+    fun loadAgendaPreviewText(appWidgetId: Int): String? =
+        prefs.getString(key(appWidgetId, KEY_AGENDA_PREVIEW_TEXT), null)
+
+    fun saveAgendaPreview(appWidgetId: Int, date: LocalDate, text: String) {
+        prefs.edit()
+            .putString(key(appWidgetId, KEY_AGENDA_PREVIEW_DATE), date.toString())
+            .putString(key(appWidgetId, KEY_AGENDA_PREVIEW_TEXT), text)
+            .apply()
+    }
+
+    fun clearAgendaPreview(appWidgetId: Int) {
+        prefs.edit()
+            .remove(key(appWidgetId, KEY_AGENDA_PREVIEW_DATE))
+            .remove(key(appWidgetId, KEY_AGENDA_PREVIEW_TEXT))
+            .apply()
     }
 
     fun loadLastTap(appWidgetId: Int): Pair<LocalDate, Long>? {
@@ -109,6 +149,9 @@ class WidgetPreferences(context: Context) {
         private const val KEY_TODAYS_NOTES_COMMAND = "todaysNotesCommand"
         private const val KEY_NVIM_PATH = "nvimPath"
         private const val KEY_SHELL_PATH = "shellPath"
+        private const val KEY_AGENDA_VAULT_PATH = "agendaVaultPath"
+        private const val KEY_AGENDA_PREVIEW_DATE = "agendaPreviewDate"
+        private const val KEY_AGENDA_PREVIEW_TEXT = "agendaPreviewText"
 
         private val ALL_KEYS = listOf(
             KEY_DISPLAYED_MONTH,
@@ -118,7 +161,10 @@ class WidgetPreferences(context: Context) {
             KEY_VAULT_PATH,
             KEY_TODAYS_NOTES_COMMAND,
             KEY_NVIM_PATH,
-            KEY_SHELL_PATH
+            KEY_SHELL_PATH,
+            KEY_AGENDA_VAULT_PATH,
+            KEY_AGENDA_PREVIEW_DATE,
+            KEY_AGENDA_PREVIEW_TEXT
         )
     }
 }
