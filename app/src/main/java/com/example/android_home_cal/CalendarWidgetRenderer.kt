@@ -4,6 +4,9 @@ import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.content.res.Configuration
+import android.os.Build
 import android.view.View
 import android.widget.RemoteViews
 import java.time.LocalDate
@@ -153,10 +156,12 @@ object CalendarWidgetRenderer {
                 when {
                     date == today -> {
                         views.setInt(cellId, "setBackgroundResource", R.drawable.bg_cell_today)
+                        applyDynamicAccentTint(context, views, cellId)
                         views.setTextColor(cellId, colorInt(context, R.color.widget_on_accent))
                     }
                     date == selectedDate -> {
                         views.setInt(cellId, "setBackgroundResource", R.drawable.bg_cell_selected)
+                        applyDynamicAccentTint(context, views, cellId)
                         views.setTextColor(cellId, colorInt(context, R.color.widget_on_surface))
                     }
                     else -> {
@@ -206,6 +211,38 @@ object CalendarWidgetRenderer {
             View.GONE
         } else {
             View.VISIBLE
+        }
+    }
+
+    /**
+     * Tints today/selected's oval drawables with the system's Material You dynamic accent
+     * (system_accent1_*) when available, instead of our static widget_accent/widget_accent_soft.
+     * On One UI 4+, Samsung's user-configurable "Color palette" (Settings > Wallpaper and
+     * style) populates these same standard resource slots, so this picks that up for free -
+     * no Samsung-specific API needed. RemoteViews.setColorStateList (the only way to retint an
+     * already-inflated widget drawable without a full re-inflation) requires API 31, which is
+     * also the minimum for dynamic color to exist at all, so there's no real capability lost by
+     * gating on it. Below API 31, or if the resource lookup fails, this simply does nothing and
+     * the drawable's own static XML color shows instead. Tinting uses PorterDuff SRC_IN, which
+     * preserves each pixel's original alpha - bg_cell_selected's soft fill (40% alpha) and solid
+     * stroke (full alpha) both re-tint correctly without losing that two-tone look.
+     */
+    private fun applyDynamicAccentTint(context: Context, views: RemoteViews, cellId: Int) {
+        val accent = dynamicAccentColor(context) ?: return
+        views.setColorStateList(cellId, "setBackgroundTintList", ColorStateList.valueOf(accent))
+    }
+
+    private fun dynamicAccentColor(context: Context): Int? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null
+        val isNightMode = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+            Configuration.UI_MODE_NIGHT_YES
+        // Mirrors Material's own default dynamic color mapping: accent1_600 for light themes'
+        // colorPrimary, accent1_200 (lighter, for contrast against dark surfaces) for dark.
+        val colorRes = if (isNightMode) android.R.color.system_accent1_200 else android.R.color.system_accent1_600
+        return try {
+            context.getColor(colorRes)
+        } catch (e: android.content.res.Resources.NotFoundException) {
+            null
         }
     }
 

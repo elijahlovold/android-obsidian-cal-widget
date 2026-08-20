@@ -6,8 +6,8 @@
     <color name="widget_weekday_label">#99FFFFFF</color>
     <color name="widget_dimmed">#4DFFFFFF</color>
 
-    <color name="widget_accent">#FF60A5FA</color>
-    <color name="widget_accent_soft">#6660A5FA</color>
+    <color name="widget_accent">#FFBACBE6</color>
+    <color name="widget_accent_soft">#66BACBE6</color>
     <color name="widget_on_accent">#FF0B1220</color>
 
     <color name="config_background">#FF121214</color>
