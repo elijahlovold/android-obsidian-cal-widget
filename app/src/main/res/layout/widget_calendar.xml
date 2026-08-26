@@ -3,7 +3,7 @@
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_widget_glass"
+    android:background="@android:color/transparent"
     android:padding="10dp">
 
     <LinearLayout
@@ -29,12 +29,12 @@
 
             <TextView
                 android:id="@+id/btn_prev"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:gravity="center"
                 android:text="@string/nav_prev"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -44,17 +44,17 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="15sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/btn_next"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:gravity="center"
                 android:text="@string/nav_next"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -73,7 +73,8 @@
                 android:gravity="center"
                 android:text="@string/weekday_sun"
                 android:textColor="@color/widget_weekday_label"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/weekday_1"
@@ -83,7 +84,8 @@
                 android:gravity="center"
                 android:text="@string/weekday_mon"
                 android:textColor="@color/widget_weekday_label"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/weekday_2"
@@ -93,7 +95,8 @@
                 android:gravity="center"
                 android:text="@string/weekday_tue"
                 android:textColor="@color/widget_weekday_label"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/weekday_3"
@@ -103,7 +106,8 @@
                 android:gravity="center"
                 android:text="@string/weekday_wed"
                 android:textColor="@color/widget_weekday_label"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/weekday_4"
@@ -113,7 +117,8 @@
                 android:gravity="center"
                 android:text="@string/weekday_thu"
                 android:textColor="@color/widget_weekday_label"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/weekday_5"
@@ -123,7 +128,8 @@
                 android:gravity="center"
                 android:text="@string/weekday_fri"
                 android:textColor="@color/widget_weekday_label"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/weekday_6"
@@ -133,7 +139,8 @@
                 android:gravity="center"
                 android:text="@string/weekday_sat"
                 android:textColor="@color/widget_weekday_label"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -152,7 +159,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_01"
@@ -162,7 +170,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_02"
@@ -172,7 +181,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_03"
@@ -182,7 +192,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_04"
@@ -192,7 +203,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_05"
@@ -202,7 +214,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_06"
@@ -212,7 +225,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -231,7 +245,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_08"
@@ -241,7 +256,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_09"
@@ -251,7 +267,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_10"
@@ -261,7 +278,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_11"
@@ -271,7 +289,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_12"
@@ -281,7 +300,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_13"
@@ -291,7 +311,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -310,7 +331,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_15"
@@ -320,7 +342,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_16"
@@ -330,7 +353,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_17"
@@ -340,7 +364,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_18"
@@ -350,7 +375,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_19"
@@ -360,7 +386,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_20"
@@ -370,7 +397,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -389,7 +417,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_22"
@@ -399,7 +428,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_23"
@@ -409,7 +439,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_24"
@@ -419,7 +450,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_25"
@@ -429,7 +461,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_26"
@@ -439,7 +472,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_27"
@@ -449,7 +483,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -468,7 +503,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_29"
@@ -478,7 +514,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_30"
@@ -488,7 +525,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_31"
@@ -498,7 +536,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_32"
@@ -508,7 +547,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_33"
@@ -518,7 +558,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_34"
@@ -528,7 +569,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -547,7 +589,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_36"
@@ -557,7 +600,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_37"
@@ -567,7 +611,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_38"
@@ -577,7 +622,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_39"
@@ -587,7 +633,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_40"
@@ -597,7 +644,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/day_41"
@@ -607,7 +655,8 @@
                 android:layout_margin="1dp"
                 android:gravity="center"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
