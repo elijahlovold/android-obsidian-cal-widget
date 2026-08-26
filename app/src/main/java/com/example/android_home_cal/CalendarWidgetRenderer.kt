@@ -13,8 +13,8 @@ import kotlin.math.roundToInt
 
 object CalendarWidgetRenderer {
 
-    // Widget's own FrameLayout padding (widget_calendar.xml): 10dp each side, both axes.
-    private const val WIDGET_PADDING_DP = 20
+    // Widget's own FrameLayout padding (widget_calendar.xml): 4dp each side, both axes.
+    private const val WIDGET_PADDING_DP = 0
     // calendar_widget_info.xml's declared minWidth, used only as a fallback for the rare case
     // a host hasn't reported real options yet (e.g. the very first draw before any resize).
     private const val FALLBACK_MIN_WIDTH_DP = 250
