@@ -9,22 +9,22 @@ import java.time.YearMonth
 class CalendarMathTest {
 
     @Test
-    fun `month starting Monday has no leading blanks`() {
-        // September 2025 starts on a Monday.
-        val month = YearMonth.of(2025, 9)
-        assertEquals(0, CalendarMath.mondayBasedOffset(month))
+    fun `month starting Sunday has no leading blanks`() {
+        // June 2025 starts on a Sunday.
+        val month = YearMonth.of(2025, 6)
+        assertEquals(0, CalendarMath.sundayBasedOffset(month))
         val cells = CalendarMath.gridCells(month)
         assertEquals(month.atDay(1), cells[0])
     }
 
     @Test
-    fun `month starting Sunday has six leading blanks`() {
-        // June 2025 starts on a Sunday, which is the last Monday-first column.
-        val month = YearMonth.of(2025, 6)
-        assertEquals(6, CalendarMath.mondayBasedOffset(month))
+    fun `month starting Monday has one leading blank`() {
+        // September 2025 starts on a Monday, the second Sunday-first column.
+        val month = YearMonth.of(2025, 9)
+        assertEquals(1, CalendarMath.sundayBasedOffset(month))
         val cells = CalendarMath.gridCells(month)
-        (0 until 6).forEach { assertNull(cells[it]) }
-        assertEquals(month.atDay(1), cells[6])
+        assertNull(cells[0])
+        assertEquals(month.atDay(1), cells[1])
     }
 
     @Test

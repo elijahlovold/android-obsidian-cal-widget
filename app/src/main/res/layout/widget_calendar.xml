@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/weekday_mon"
+                android:text="@string/weekday_sun"
                 android:textColor="@color/widget_weekday_label"
                 android:textSize="11sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/weekday_tue"
+                android:text="@string/weekday_mon"
                 android:textColor="@color/widget_weekday_label"
                 android:textSize="11sp" />
 
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/weekday_wed"
+                android:text="@string/weekday_tue"
                 android:textColor="@color/widget_weekday_label"
                 android:textSize="11sp" />
 
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/weekday_thu"
+                android:text="@string/weekday_wed"
                 android:textColor="@color/widget_weekday_label"
                 android:textSize="11sp" />
 
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/weekday_fri"
+                android:text="@string/weekday_thu"
                 android:textColor="@color/widget_weekday_label"
                 android:textSize="11sp" />
 
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/weekday_sat"
+                android:text="@string/weekday_fri"
                 android:textColor="@color/widget_weekday_label"
                 android:textSize="11sp" />
 
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/weekday_sun"
+                android:text="@string/weekday_sat"
                 android:textColor="@color/widget_weekday_label"
                 android:textSize="11sp" />
 
