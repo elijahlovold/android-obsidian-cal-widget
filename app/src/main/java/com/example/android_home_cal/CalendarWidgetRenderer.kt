@@ -173,7 +173,10 @@ object CalendarWidgetRenderer {
             }
         }
 
-        views.setTextViewText(R.id.text_agenda, agendaPreviewText(preferences, appWidgetId, selectedDate))
+        // The cache holds the raw section; sub-item trimming and markup styling happen here so
+        // the display rules can change without invalidating cached notes.
+        val agendaText = agendaPreviewText(preferences, appWidgetId, selectedDate)
+        views.setTextViewText(R.id.text_agenda, AgendaSpannable.from(AgendaFormatter.format(agendaText)))
 
         return views
     }

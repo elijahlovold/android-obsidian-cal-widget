@@ -11,6 +11,8 @@
     <color name="widget_accent_strong">#B3FFFFFF</color>
     <color name="widget_on_accent">#FFFFFFFF</color>
 
+    <color name="ic_launcher_background">#FF141B30</color>
+
     <color name="config_background">#FFF5F5F7</color>
     <color name="config_surface">#FFFFFFFF</color>
     <color name="config_on_surface">#FF1C1B1F</color>

@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="images/app_icon.png" width="160" alt="Daily Notes Calendar icon">
+</p>
+
 # Daily Notes Calendar
 
 A small Android home-screen widget that shows a monthly calendar. Tap a date
@@ -113,7 +117,11 @@ be done from the app's manifest alone:
 - **Known limitation**: the app doesn't yet request the `RUN_COMMAND`
   runtime permission itself (see Termux setup above for the manual grant).
   A clean fix would request it from `WidgetConfigActivity` on first setup.
-- Selecting a date (single tap) shows an agenda preview below the calendar:
+- Selecting a date (single tap) shows an agenda preview below the calendar
+  (sub-items indented under a top-level `work` item are trimmed out, and
+  inline formatting is rendered rather than shown raw: `[[link]]` and
+  `[text](url)` are underlined, `**bold**`, `*italic*`, `~~strike~~` and
+  `` `code` `` are styled - see `AgendaFormatter`):
   the `# Agenda` section of that date's note, read directly from shared
   storage (`AgendaPreviewExtractor`/`AgendaPreviewReader`), not through
   Termux - this needs the app's own "All files access" storage permission
@@ -127,3 +135,9 @@ be done from the app's manifest alone:
   match, since RemoteViews has no declarative aspect-ratio support. Any
   extra widget height goes entirely to the agenda pane; shrinking back down
   hides that pane once the widget is close to the calendar's own minimum.
+- The launcher icon is derived from `images/app_icon.png` (scaled into the
+  adaptive-icon safe zone over `@color/ic_launcher_background`, plus legacy
+  `.webp` fallbacks under `app/src/main/res/mipmap-*`). Editing the source
+  PNG alone changes nothing in the built app; regenerate the mipmaps with
+  ImageMagick if the artwork changes. The source PNG has had its
+  AI-generation (C2PA/ChatGPT) metadata stripped.
