@@ -13,6 +13,12 @@
 
     <color name="ic_launcher_background">#FF141B30</color>
 
+    <!-- Checkbox/bullet tint by indent level, cycling (PaneListRenderer). -->
+    <color name="widget_level_0">#E61C1B1F</color>
+    <color name="widget_level_1">#FF3B6FB6</color>
+    <color name="widget_level_2">#FF3E8E5A</color>
+    <color name="widget_level_3">#FFB0662A</color>
+
     <color name="config_background">#FFF5F5F7</color>
     <color name="config_surface">#FFFFFFFF</color>
     <color name="config_on_surface">#FF1C1B1F</color>

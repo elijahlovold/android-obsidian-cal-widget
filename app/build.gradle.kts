@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.android_home_cal"
-        minSdk = 26
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -41,6 +41,11 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
+    }
+    testOptions {
+        // JVM unit tests exercise vault IO code that logs via android.util.Log; return
+        // defaults from the android.jar stubs instead of throwing.
+        unitTests.isReturnDefaultValues = true
     }
     packaging {
         resources {

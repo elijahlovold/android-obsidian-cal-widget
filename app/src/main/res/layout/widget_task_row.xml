@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row in the widget task list: only the CheckBox toggles completion; tapping the text
+     does nothing. (CheckBox is allowed in RemoteViews from API 31, the app's minSdk.) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/task_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/task_check"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="6dp"
+        android:background="@null"
+        android:button="@drawable/checkbox_widget"
+        android:minWidth="0dp"
+        android:minHeight="0dp" />
+
+    <TextView
+        android:id="@+id/task_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/widget_on_surface"
+        android:textSize="14sp" />
+</LinearLayout>

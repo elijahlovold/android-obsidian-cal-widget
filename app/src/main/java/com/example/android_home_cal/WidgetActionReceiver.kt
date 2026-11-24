@@ -9,7 +9,21 @@ import android.content.Intent
 import android.os.SystemClock
 import android.util.Log
 import android.view.ViewConfiguration
+import android.widget.RemoteViews
+import com.example.android_home_cal.reminders.ReminderScheduler
+import com.example.android_home_cal.reminders.TaskActions
+import com.example.android_home_cal.reminders.TaskRefExtras
+import com.example.android_home_cal.termux.TermuxLauncher
+import com.example.android_home_cal.vault.FileParseCache
+import com.example.android_home_cal.vault.VaultFiles
+import com.example.android_home_cal.widget.CalendarMath
+import com.example.android_home_cal.widget.CalendarWidgetRenderer
+import com.example.android_home_cal.widget.WidgetActions
+import com.example.android_home_cal.widget.WidgetPreferences
+import com.example.android_home_cal.widget.Widgets
 import java.time.LocalDate
+import java.time.YearMonth
+import kotlin.concurrent.thread
 
 class WidgetActionReceiver : BroadcastReceiver() {
 
@@ -18,6 +32,53 @@ class WidgetActionReceiver : BroadcastReceiver() {
         when (intent.action) {
             WidgetActions.ACTION_WIDGET_TAP -> handleWidgetTap(context, preferences, intent)
             WidgetActions.ACTION_DESELECT_EXPIRED -> handleDeselectExpired(context, preferences, intent)
+            WidgetActions.ACTION_TASK_TOGGLE -> handleTaskToggle(context, intent)
+        }
+    }
+
+    /**
+     * Manual rescan: forget every parsed file (in case a sync tool kept the old mtime), then
+     * replan reminders and redraw every widget. Off the main thread.
+     */
+    private fun rescan(context: Context) {
+        val app = context.applicationContext
+        val pending = goAsync()
+        thread(name = "rescan") {
+            try {
+                FileParseCache.clear()
+                ReminderScheduler.scan(app, forceRedraw = true)
+            } catch (e: Exception) {
+                Log.e(TAG, "Manual rescan failed", e)
+            } finally {
+                pending.finish()
+            }
+        }
+    }
+
+    /**
+     * A list checkbox changed: write it back off the main thread, then rescan. The rescan sees
+     * the changed file and redraws; an explicit redraw is only needed when it can't (the write
+     * failed and the checkbox must revert, or this widget uses a different vault than the
+     * primary one the rescan watches).
+     */
+    private fun handleTaskToggle(context: Context, intent: Intent) {
+        val ref = TaskRefExtras.get(intent) ?: return
+        val checked = intent.getBooleanExtra(RemoteViews.EXTRA_CHECKED, false)
+        val settings = WidgetActions.parse(intent)?.let { WidgetPreferences(context).loadSettings(it.appWidgetId) } ?: return
+        val app = context.applicationContext
+        val pending = goAsync()
+        thread(name = "task-toggle") {
+            try {
+                val vault = VaultFiles(settings.agendaVaultPath)
+                val outcome = TaskActions.setDone(vault, ref, checked)
+                val watched = Widgets.primaryVault(app)?.root == vault.root
+                if (outcome != TaskActions.Outcome.OK || !watched) CalendarWidgetRenderer.redrawAll(app)
+                ReminderScheduler.scan(app)
+            } catch (e: Exception) {
+                Log.e(TAG, "Task toggle failed for $ref", e)
+            } finally {
+                pending.finish()
+            }
         }
     }
 
@@ -36,14 +97,19 @@ class WidgetActionReceiver : BroadcastReceiver() {
                 preferences.saveDisplayedMonth(action.appWidgetId, month)
                 redraw(context, action.appWidgetId)
             }
-            is WidgetActions.WidgetAction.OpenToday -> {
+            is WidgetActions.WidgetAction.GoToToday -> {
+                // Jump back to the current month with today selected. Opening the note stays
+                // on double-tap, same as any other date.
                 val today = LocalDate.now()
-                cancelDeselectExpiry(context, action.appWidgetId, today)
-                preferences.saveSelectedDate(action.appWidgetId, today)
+                preferences.saveDisplayedMonth(action.appWidgetId, YearMonth.from(today))
                 preferences.clearLastTap(action.appWidgetId)
-                TermuxLauncher.openNote(context, today, preferences.loadSettings(action.appWidgetId))
+                select(context, preferences, action.appWidgetId, today, fullRedraw = true)
+            }
+            is WidgetActions.WidgetAction.TogglePaneMode -> {
+                preferences.saveShowUpcoming(action.appWidgetId, !preferences.loadShowUpcoming(action.appWidgetId))
                 redraw(context, action.appWidgetId)
             }
+            is WidgetActions.WidgetAction.Rescan -> rescan(context)
             is WidgetActions.WidgetAction.DateTap -> handleDateTap(context, preferences, action)
             else -> Unit
         }
@@ -88,21 +154,24 @@ class WidgetActionReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun select(context: Context, preferences: WidgetPreferences, appWidgetId: Int, date: LocalDate) {
+    private fun select(
+        context: Context,
+        preferences: WidgetPreferences,
+        appWidgetId: Int,
+        date: LocalDate,
+        fullRedraw: Boolean = false
+    ) {
         preferences.loadSelectedDate(appWidgetId)?.let { previousDate ->
             cancelDeselectExpiry(context, appWidgetId, previousDate)
         }
         preferences.saveSelectedDate(appWidgetId, date)
-        val agendaText = AgendaPreviewReader.read(date, preferences.loadSettings(appWidgetId))
-        preferences.saveAgendaPreview(appWidgetId, date, agendaText)
         scheduleDeselectExpiry(context, appWidgetId, date)
-        partialRedraw(context, appWidgetId)
+        if (fullRedraw) redraw(context, appWidgetId) else partialRedraw(context, appWidgetId)
     }
 
     private fun deselect(context: Context, preferences: WidgetPreferences, appWidgetId: Int, date: LocalDate) {
         cancelDeselectExpiry(context, appWidgetId, date)
         preferences.clearSelectedDate(appWidgetId)
-        preferences.clearAgendaPreview(appWidgetId)
         partialRedraw(context, appWidgetId)
     }
 

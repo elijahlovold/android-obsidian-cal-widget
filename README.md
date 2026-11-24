@@ -43,6 +43,13 @@ usually isn't already running when the widget is tapped) - it foregrounds
 Termux but silently fails to run the command. Every tap opens a fresh
 session as a result.
 
+## Reminders and task list
+
+Unchecked checkbox items in a note's `# Agenda` that start with a time get a push
+notification, e.g. `- [ ] 14:30 -30m dentist`. Recurring reminders live in
+`Calendar/Cal-Cron.md`, with a log in `Calendar/Cal-Cron-History.md`. On Android 12+ the agenda pane is one
+scrollable list: agenda (tickable checkboxes), cron tasks, then the scratchpad. Format and design: [docs/reminders.md](docs/reminders.md).
+
 ## Build
 
 Open the project in Android Studio, sync Gradle, and build, or from the
@@ -101,14 +108,15 @@ be done from the app's manifest alone:
    and shell path.
 4. Tap a date to select it (it gets a subtle highlight).
 5. Double-tap a date to open it in Termux/nvim.
-6. Tap the month/year header to jump straight to today's note.
+6. Tap the month/year header to jump back to the current month with today selected.
 7. Use `‹` / `›` to change the displayed month; each widget instance
    remembers its own month independently.
 
 ## Notes
 
-- No network access, no background services beyond the widget's own
-  periodic redraw (used to keep "today" accurate across midnight).
+- Requires Android 12+ (minSdk 31). No network access and no persistent background
+  service: reminders run off alarms (an exact one per reminder plus a ~10-minute poll),
+  see [docs/reminders.md](docs/reminders.md).
 - If Termux isn't installed, or denies the `RUN_COMMAND` permission, the
   widget shows a toast and logs the error instead of crashing. Samsung/One
   UI sometimes suppresses toasts from background-triggered broadcasts, so
@@ -117,18 +125,16 @@ be done from the app's manifest alone:
 - **Known limitation**: the app doesn't yet request the `RUN_COMMAND`
   runtime permission itself (see Termux setup above for the manual grant).
   A clean fix would request it from `WidgetConfigActivity` on first setup.
-- Selecting a date (single tap) shows an agenda preview below the calendar
-  (sub-items indented under a top-level `work` item are trimmed out, and
-  inline formatting is rendered rather than shown raw: `[[link]]` and
-  `[text](url)` are underlined, `**bold**`, `*italic*`, `~~strike~~` and
-  `` `code` `` are styled - see `AgendaFormatter`):
-  the `# Agenda` section of that date's note, read directly from shared
-  storage (`AgendaPreviewExtractor`/`AgendaPreviewReader`), not through
-  Termux - this needs the app's own "All files access" storage permission
-  (grantable from the config screen), separate from the Termux RUN_COMMAND
-  permission used to open notes. The selection auto-expires after a short
-  idle timeout, since true screen-off detection would require a persistent
-  foreground service this app deliberately doesn't have.
+- Below the calendar, the pane shows the selected date's `# Agenda` (tickable
+  checkboxes), that day's cron entries and the `# Scratchpad`, or, with the divider's
+  Day/Upcoming pill, every upcoming reminder. Inline formatting is rendered rather than
+  shown raw: `[[link]]` and `[text](url)` are underlined, `**bold**`, `*italic*`,
+  `~~strike~~` and `` `code` `` are styled (`InlineMarkdown`). Notes are read directly
+  from shared storage, not through Termux. This needs the app's own "All files access"
+  storage permission (grantable from the config screen), separate from the Termux
+  RUN_COMMAND permission used to open notes. The selection auto-expires after a short
+  idle timeout, since true screen-off detection would require a persistent foreground
+  service this app deliberately doesn't have.
 - The calendar itself never stretches or shrinks with the widget - day
   cells stay square by reading the widget's actual current width at render
   time (`CalendarWidgetRenderer.squareCellSizeDp`) and computing height to

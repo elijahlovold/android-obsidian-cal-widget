@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One display-only line of the pane list (bullet, static box, heading or text). The marker uses the same drawables,
+     size and per-level tint as the task view's checkboxes; GONE for plain text. -->
+<!-- Not a compound drawable: RemoteViews can't tint one per row, but can tint an ImageView. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/preview_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:id="@+id/preview_marker"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="6dp"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/preview_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:textColor="@color/widget_on_surface"
+        android:textSize="14sp" />
+</LinearLayout>

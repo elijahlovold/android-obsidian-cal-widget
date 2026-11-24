@@ -4,14 +4,21 @@
 
     <uses-permission android:name="com.termux.permission.RUN_COMMAND" />
 
-    <!-- Direct read access to the vault on shared storage, for the agenda preview -
+    <!-- Direct read/write access to the vault on shared storage (notes, Cal-Cron files) -
          separate from the RUN_COMMAND path used to open notes in Termux. -->
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+
+    <!-- Reminders (docs/reminders.md). USE_EXACT_ALARM is auto-granted on 33+ for a
+         sideloaded reminder app; SCHEDULE_EXACT_ALARM covers 31-32. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <queries>
         <package android:name="com.termux" />
@@ -25,8 +32,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Androidhomecal"
-        tools:targetApi="31">
+        android:theme="@style/Theme.Androidhomecal">
 
         <activity
             android:name=".WidgetConfigActivity"
@@ -52,6 +58,25 @@
         <receiver
             android:name=".WidgetActionReceiver"
             android:exported="false" />
+
+        <!-- Internal only: notification actions and alarms. Not exported, since its actions
+             write to the vault. -->
+        <receiver
+            android:name=".ReminderReceiver"
+            android:exported="false" />
+
+        <!-- System events that should trigger a reminder rescan; it only ever rescans. -->
+        <receiver
+            android:name=".ReminderSystemReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

@@ -4,6 +4,9 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.os.Bundle
+import com.example.android_home_cal.reminders.ReminderScheduler
+import com.example.android_home_cal.widget.CalendarWidgetRenderer
+import com.example.android_home_cal.widget.WidgetPreferences
 
 class CalendarWidgetProvider : AppWidgetProvider() {
 
@@ -15,6 +18,12 @@ class CalendarWidgetProvider : AppWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             CalendarWidgetRenderer.updateWidget(context, appWidgetManager, appWidgetId)
         }
+        ReminderReceiver.requestScan(context)
+    }
+
+    override fun onDisabled(context: Context) {
+        // Last widget removed: reminders use the widget's vault path, so they stop too.
+        ReminderScheduler.cancelAlarms(context)
     }
 
     override fun onAppWidgetOptionsChanged(

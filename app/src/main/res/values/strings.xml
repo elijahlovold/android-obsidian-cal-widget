@@ -26,4 +26,27 @@
     <string name="config_label_agenda_vault_path">Vault path (shared storage)</string>
     <string name="config_grant_storage_access">Grant storage access</string>
     <string name="config_save">Save</string>
+    <string name="tasks_recurring">Cron</string>
+    <string name="preview_scratchpad">Scratchpad</string>
+    <string name="pane_mode_day">Day</string>
+    <string name="rescan">Rescan notes</string>
+    <string name="pane_mode_upcoming">Upcoming</string>
+    <string name="upcoming_empty">No upcoming reminders</string>
+    <string name="day_today">Today</string>
+    <string name="day_tomorrow">Tomorrow</string>
+
+    <string name="reminders_channel">Reminders</string>
+    <string name="reminders_problem_channel">Reminder problems</string>
+    <string name="reminder_action_done">Done</string>
+    <string name="reminder_action_snooze">Snooze 10m</string>
+    <string name="reminder_action_dismiss">Dismiss</string>
+    <string name="reminder_cron_errors_title">Cal-Cron.md has invalid lines</string>
+    <string name="reminder_not_found_title">Couldn\'t find task</string>
+    <string name="reminder_not_found_text">%1$s - edited since the reminder?</string>
+    <string name="reminder_write_failed_title">Couldn\'t save task</string>
+
+    <string name="config_reminders_title">Reminders</string>
+    <string name="config_grant_notifications">Allow notifications</string>
+    <string name="config_grant_exact_alarms">Allow exact alarms</string>
+    <string name="config_battery_optimization">Exempt from battery optimization</string>
 </resources>

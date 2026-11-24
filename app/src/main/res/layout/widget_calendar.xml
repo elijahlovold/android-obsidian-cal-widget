@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- UseCompoundDrawables: a compound drawable is pinned to the cell bottom, not the text (see
+     the day-cell comment). TooManyViews: 42 day cells x (container, number, dot); partial
+     updates keep taps cheap. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:padding="0dp">
+    android:padding="0dp"
+    tools:ignore="UseCompoundDrawables,TooManyViews">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -144,89 +149,213 @@
 
         </LinearLayout>
 
+        <!-- Day cells: a centered stack of the number and a task dot directly beneath it. The
+             dot is INVISIBLE (not GONE) on days without tasks, so every number sits at the
+             same height. A TextView compound drawable can't do this: it's pinned to the
+             cell's bottom edge, not to the text. -->
         <LinearLayout
             android:id="@+id/week_row_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="7">
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/day_00"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_00_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_00_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_01"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_01_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_01_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_02"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_02_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_02_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_03"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_03_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_03_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_04"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_04_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_04_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_05"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_05_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_05_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_06"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day_06_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_06_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -234,85 +363,205 @@
             android:id="@+id/week_row_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="7">
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/day_07"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_07_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_07_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_08"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_08_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_08_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_09"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_09_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_09_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_10"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_10_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_10_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_11"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_11_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_11_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_12"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_12_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_12_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_13"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day_13_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_13_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -320,85 +569,205 @@
             android:id="@+id/week_row_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="7">
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/day_14"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_14_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_14_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_15"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_15_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_15_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_16"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_16_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_16_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_17"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_17_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_17_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_18"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_18_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_18_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_19"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_19_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_19_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_20"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day_20_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_20_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -406,85 +775,205 @@
             android:id="@+id/week_row_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="7">
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/day_21"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_21_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_21_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_22"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_22_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_22_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_23"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_23_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_23_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_24"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_24_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_24_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_25"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_25_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_25_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_26"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_26_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_26_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_27"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day_27_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_27_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -492,85 +981,205 @@
             android:id="@+id/week_row_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="7">
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/day_28"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_28_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_28_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_29"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_29_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_29_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_30"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_30_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_30_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_31"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_31_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_31_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_32"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_32_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_32_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_33"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_33_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_33_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_34"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day_34_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_34_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -578,85 +1187,205 @@
             android:id="@+id/week_row_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="7">
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/day_35"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_35_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_35_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_36"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_36_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_36_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_37"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_37_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_37_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_38"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_38_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_38_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_39"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_39_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_39_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_40"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/day_40_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_40_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/day_41"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="1dp"
                 android:gravity="center"
-                android:textColor="@color/widget_on_surface"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/day_41_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/day_41_dot"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="2dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_day_dot"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -668,21 +1397,84 @@
             android:orientation="vertical"
             android:paddingTop="6dp">
 
-            <TextView
+            <!-- Divider: rescan button at the far left, pane-mode pill centered on the line. An invisible spacer the rescan button's width at the far right
+                 keeps the pill exactly centered. The line is split into two segments rather
+                 than overlaid, since the pill's background is translucent. -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:background="@color/widget_glass_border"
-                android:text="" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/btn_rescan"
+                    android:layout_width="26dp"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_mode_button"
+                    android:contentDescription="@string/rescan"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_refresh"
+                    android:tint="@color/widget_on_surface" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/widget_glass_border"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/btn_pane_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_mode_button"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/widget_on_surface"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/widget_glass_border"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/spacer_rescan"
+                    android:layout_width="26dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="6dp"
+                    android:text=""
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <!-- Shown instead of list_agenda when the current mode has nothing to list. -->
             <TextView
-                android:id="@+id/text_agenda"
+                android:id="@+id/text_pane_empty"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="top|start"
                 android:textColor="@color/widget_on_surface"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <!-- The pane's scrollable list (PaneListRenderer): Day mode = agenda, cron, scratchpad;
+                 Upcoming mode = open timed tasks by day. -->
+            <ListView
+                android:id="@+id/list_agenda"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:divider="@null"
+                android:visibility="gone" />
 
         </LinearLayout>
 
